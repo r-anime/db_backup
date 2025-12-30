@@ -10,7 +10,7 @@ RUN go mod download
 
 COPY *.go .
 
-RUN go build -o db_backup main.go
+RUN go build -o db_backup .
 
 FROM alpine:latest AS runtime
 

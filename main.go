@@ -2,16 +2,14 @@ package main
 
 import (
 	"fmt"
-	"github.com/spf13/pflag"
 )
 
 func main() {
-	logLevel := pflag.StringP("log-level", "l", "INFO", "Optional log level (INFO, DEBUG, etc)")
-	backupType := pflag.StringP("backup-type", "b", "manual", "enable verbose mode")
-
-	pflag.Parse()
+	dbService, dbName, backupType, compressionLevel := ParseArgs()
 
 	fmt.Println("Test")
-	fmt.Println("logLevel", *logLevel)
-	fmt.Println("backupType", *backupType)
+	fmt.Println("dbService", dbService)
+	fmt.Println("dbName", dbName)
+	fmt.Println("backupType", backupType)
+	fmt.Println("compressionLevel", compressionLevel)
 }
