@@ -52,3 +52,16 @@ jobs:
           build-args: |
             GIT_COMMIT_HASH=${{ github.sha }}
             GIT_REPO_URL=https://github.com/${{ github.repository }}
+
+  golangci:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-go@v6
+        with:
+          go-version: stable
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v9
+        with:
+          version: v2.7.2
