@@ -40,24 +40,25 @@ Cry if these instructions don't work, cause you're on your own.
 ./db_backup -s stage_db -d r_anime_staging -b daily -c 5
 
 # Flags
--s, --db-service string        the docker compose service name for the db (default "db")
--d, --db-name string           the name of the database (default "r_anime")
--b, --backup-type string       the backup series label (yearly monthly weekly daily manual) (default "manual")
--c, --compression-level int8   the compression level (1 - 19) (default 3)
-```
+-d, --docker-container string   the docker (not compose) container name for the db (default "modbot-db")
+-n, --db-name string            the name of the database (default "r_anime")
+-t, --backup-type string        the backup series label (yearly, monthly, weekly, daily, manual) (default "manual")
+-c, --compression-level int8    the compression level (1 - 19) (default 3)
+-b, --backup-dir string         the directory the backups are located in (default "manual")
+-m, --min-save-size uint16      the minimum file size to consider for saving in MiB (default 2048)
 
 ### Examples
 
 ```bash
 # Normal dev like run
-go run . -s stage_db -d r_anime_staging -b weekly
+go run . -d stage-modbot-db -n r_anime_staging -t weekly
 
 # Using build and running with default values
 go build -o ./bin/db_backup
 ./bin/db_backup
 
 # Using docker compose
-docker compose run --build --rm db_backup -s stage_db -d r_anime_staging -b weekly
+docker compose run --build --rm -d stage-modbot-db -n r_anime_staging -t weekly
 ```
 
 ## Contributing

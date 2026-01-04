@@ -17,6 +17,8 @@ FROM alpine:latest AS runtime
 ENV APP_HOME=/app
 WORKDIR $APP_HOME
 
+RUN apk add --no-cache docker-cli
+
 COPY --from=builder /app/db_backup .
 RUN chmod +x ./db_backup
 

@@ -5,7 +5,7 @@ services:
   # only for dev / testing purposes
   db_backup:
     build: .
-    command: ./db_backup -s stage_db -d r_anime_staging -b manual
+    command: ./db_backup -s stage_db -d stage-modbot-db -n stage_r_anime -t weekly
     volumes:
       - ./ztest/srv:/srv
       - /var/run/docker.sock:/var/run/docker.sock
