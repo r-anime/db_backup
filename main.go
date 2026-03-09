@@ -9,6 +9,8 @@ import (
 	"sort"
 	"strings"
 	"time"
+
+	"golang.org/x/term"
 )
 
 const NumberSoftDelete = 1
@@ -109,16 +111,19 @@ func renameFile(oldFile string, newFile string) {
 func runBackup(dbContainer string, dbName string, tempBackup string, compressionLevel int8) (duration time.Duration, err error) {
 	start := time.Now()
 
-	command := []string{
-		"docker", "exec", "-it",
+	command := []string{"docker", "exec"}
+	if term.IsTerminal(int(os.Stdin.Fd())) {
+		command = append(command, "-it")
+	}
+	command = append(command,
 		dbContainer,
 		"pg_dump",
 		"-U", dbName,
 		fmt.Sprintf("--compress=zstd:level=%d,long=1", compressionLevel),
 		"-Fc",
-		"-f", "/mnt/backup/" + tempBackup,
+		"-f", "/mnt/backup/"+tempBackup,
 		dbName,
-	}
+	)
 	humanCommand := strings.Join(command, " ")
 
 	log.Printf("Running command: '%s'\n", humanCommand)

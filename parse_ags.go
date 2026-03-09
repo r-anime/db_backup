@@ -89,13 +89,17 @@ func runBackupDirValidation(errs *[]error, backupDir string) {
 
 	testFile := filepath.Join(backupDir, ".root_check_tmp")
 
-	// Try to create the file
+	// Try to create a file to test permissions for the rename
 	f, err := os.Create(testFile)
 	if err != nil {
 		log.Println("Cannot write to", backupDir, "- are you running as root?")
 		os.Exit(1)
 	}
-	f.Close()
+	err = f.Close()
+	if err != nil {
+		log.Println("Cannot close test file:", err)
+		os.Exit(1)
+	}
 
 	// Try to remove the file
 	err = os.Remove(testFile)
