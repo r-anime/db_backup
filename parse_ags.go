@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 
 	"github.com/spf13/pflag"
@@ -84,5 +85,22 @@ func runBackupDirValidation(errs *[]error, backupDir string) {
 
 	if !info.IsDir() {
 		*errs = append(*errs, fmt.Errorf("%s is not a valid directory", backupDir))
+	}
+
+	testFile := filepath.Join(backupDir, ".root_check_tmp")
+
+	// Try to create the file
+	f, err := os.Create(testFile)
+	if err != nil {
+		log.Println("Cannot write to", backupDir, "- are you running as root?")
+		os.Exit(1)
+	}
+	f.Close()
+
+	// Try to remove the file
+	err = os.Remove(testFile)
+	if err != nil {
+		log.Println("Cannot remove test file:", err)
+		os.Exit(1)
 	}
 }
