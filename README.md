@@ -22,7 +22,7 @@ https://golangci-lint.run/docs/welcome/install/local/
 
 which should suggest something like
 ```bash
-curl -sSfL https://golangci-lint.run/install.sh | sh -s -- -b $(go env GOBIN) v2.7.2
+curl -sSfL https://golangci-lint.run/install.sh | sh -s -- -b $(go env GOBIN) v2.11.2
 ```
 
 Run the linter by running
@@ -60,6 +60,15 @@ go build -o ./bin/db_backup
 # Using docker compose (has some issues with volume management)
 docker compose run --build --rm db_backup -d stage-modbot-db -n r_anime_staging -t manual
 ```
+
+## Releasing
+
+Install GoReleaser (This installs a metric fuckton of shit it seems)
+`go install github.com/goreleaser/goreleaser/v2@latest`
+
+For CI, just push a git tag and it'll automatically make a release
+
+````
 
 ## Contributing
 
