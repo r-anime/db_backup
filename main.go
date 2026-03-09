@@ -109,14 +109,23 @@ func renameFile(oldFile string, newFile string) {
 func runBackup(dbContainer string, dbName string, tempBackup string, compressionLevel int8) (duration time.Duration, err error) {
 	start := time.Now()
 
-	dockerCommandStr := fmt.Sprintf("pg_dump -U %s --compress=zstd:level=%d,long=1 -Fc -f /mnt/backup/%s %s", dbName, compressionLevel, tempBackup, dbName)
-	command := []string{"docker", "exec", dbContainer, "/bin/bash", "-c", dockerCommandStr}
-	humanCommand := fmt.Sprintf("%s \"%s\"", strings.Join(command[:len(command)-1], " "), dockerCommandStr)
+	command := []string{
+		"docker", "exec", "-it",
+		dbContainer,
+		"pg_dump",
+		"-U", dbName,
+		fmt.Sprintf("--compress=zstd:level=%d,long=1", compressionLevel),
+		"-Fc",
+		"-f", "/mnt/backup/" + tempBackup,
+		dbName,
+	}
+	humanCommand := strings.Join(command, " ")
 
 	log.Printf("Running command: '%s'\n", humanCommand)
 	cmd := exec.Command(command[0], command[1:]...)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
+	cmd.Stdin = os.Stdin
 
 	err = cmd.Run()
 	if err != nil {
