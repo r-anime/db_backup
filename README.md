@@ -51,14 +51,14 @@ Cry if these instructions don't work, cause you're on your own.
 
 ```bash
 # Normal dev like run
-go run . -d stage-modbot-db -n r_anime_staging -t weekly
+go run . -d stage-modbot-db -n r_anime_staging -t manual
 
 # Using build and running with default values
 go build -o ./bin/db_backup
 ./bin/db_backup
 
-# Using docker compose
-docker compose run --build --rm -d stage-modbot-db -n r_anime_staging -t weekly
+# Using docker compose (has some issues with volume management)
+docker compose run --build --rm db_backup -d stage-modbot-db -n r_anime_staging -t manual
 ```
 
 ## Contributing
