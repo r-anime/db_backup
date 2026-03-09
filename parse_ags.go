@@ -17,7 +17,7 @@ func ParseArgs() (dockerContainer string, dbName string, backupType BackupType, 
 	dbNamePtr := pflag.StringP("db-name", "n", "r_anime", "the name of the database")
 	backupTypePtr := pflag.StringP("backup-type", "t", "manual", "the backup series label (yearly, monthly, weekly, daily, manual)")
 	compressionLevelPtr := pflag.Int8P("compression-level", "c", 3, "the compression level (1 - 19)")
-	backupDirPtr := pflag.StringP("backup-dir", "b", "manual", "the directory the backups are located in")
+	backupDirPtr := pflag.StringP("backup-dir", "b", "/mnt/backup", "the directory the backups are located in")
 	minSaveSizePtr := pflag.Uint16P("min-save-size", "m", 2*1024, "the minimum file size to consider for saving in MiB")
 
 	pflag.Parse()
