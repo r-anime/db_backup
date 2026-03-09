@@ -59,16 +59,41 @@ go build -o ./bin/db_backup
 
 # Using docker compose (has some issues with volume management)
 docker compose run --build --rm db_backup -d stage-modbot-db -n r_anime_staging -t manual
+
+# On prod
+
+# Normal manual backup
+sudo db_backup
+
+# or with some default flags explicitly listed that you might want to change
+sudo db_backup -d modbot-db -n r_anime -t manual -c 3
+
+# Help for options
+db_backup --help
 ```
 
 ## Releasing
 
-Install GoReleaser (This installs a metric fuckton of shit it seems)
-`go install github.com/goreleaser/goreleaser/v2@latest`
+~~Install GoReleaser (This installs a metric fuckton of shit it seems)
+`go install github.com/goreleaser/goreleaser/v2@latest`~~
 
-For CI, just push a git tag and it'll automatically make a release
+Just push a git tag and it'll automatically make a release.
 
-````
+```bash
+git tag -a 1.0.0 -m "1.0.0"
+git push --tags
+```
+
+Then you can just download it to the server and unpack it and put it in a bin and use it.
+
+```bash
+VERSION=1.0.0 &&
+wget -O db_backup.tar.gz "https://github.com/r-anime/db_backup/releases/download/${VERSION}/db_backup_${VERSION}_linux_amd64.tar.gz" &&
+tar -xzf db_backup.tar.gz &&
+sudo mv db_backup /usr/local/bin/ &&
+sudo chmod +x /usr/local/bin/db_backup &&
+rm db_backup.tar.gz
+```
 
 ## Contributing
 
