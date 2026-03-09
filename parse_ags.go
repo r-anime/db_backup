@@ -13,6 +13,8 @@ import (
 
 type BackupType = string
 
+var version = "dev"
+
 func ParseArgs() (dockerContainer string, dbName string, backupType BackupType, compressionLevel int8, backupDir string, minSaveSize int64) {
 	dockerContainerPtr := pflag.StringP("docker-container", "d", "modbot-db", "the docker (not compose) container name for the db")
 	dbNamePtr := pflag.StringP("db-name", "n", "r_anime", "the name of the database")
@@ -20,8 +22,14 @@ func ParseArgs() (dockerContainer string, dbName string, backupType BackupType, 
 	compressionLevelPtr := pflag.Int8P("compression-level", "c", 3, "the compression level (1 - 19)")
 	backupDirPtr := pflag.StringP("backup-dir", "b", "/srv/prod/backup/", "the directory the backups are located in")
 	minSaveSizePtr := pflag.Uint16P("min-save-size", "m", 2*1024, "the minimum file size to consider for saving in MiB")
+	versionPtr := pflag.BoolP("version", "v", false, "print the version and exit")
 
 	pflag.Parse()
+
+	if *versionPtr {
+		fmt.Println(version)
+		os.Exit(0)
+	}
 
 	runValidations(*dockerContainerPtr, *backupTypePtr, *compressionLevelPtr, *backupDirPtr)
 
