@@ -37,14 +37,14 @@ Cry if these instructions don't work, cause you're on your own.
 
 ```bash
 # Basic usage
-./db_backup -s stage_db -d r_anime_staging -b daily -c 5
+./db_backup -d stage_db -n r_anime_staging -t daily -c 5
 
 # Flags
 -d, --docker-container string   the docker (not compose) container name for the db (default "modbot-db")
 -n, --db-name string            the name of the database (default "r_anime")
 -t, --backup-type string        the backup series label (yearly, monthly, weekly, daily, manual) (default "manual")
 -c, --compression-level int8    the compression level (1 - 19) (default 3)
--b, --backup-dir string         the directory the backups are located in (default "manual")
+-b, --backup-dir string         the directory the backups are located in (default "/srv/prod/backup/")
 -m, --min-save-size uint16      the minimum file size to consider for saving in MiB (default 2048)
 
 ### Examples
