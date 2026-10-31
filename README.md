@@ -22,7 +22,7 @@ https://golangci-lint.run/docs/welcome/install/local/
 
 which should suggest something like
 ```bash
-curl -sSfL https://golangci-lint.run/install.sh | sh -s -- -b $(go env GOBIN) v2.11.2
+curl -sSfL https://golangci-lint.run/install.sh | sh -s -- -b $(go env GOBIN) v2.15.0
 ```
 
 Run the linter by running
@@ -80,14 +80,14 @@ db_backup --help
 Just push a git tag and it'll automatically make a release.
 
 ```bash
-git tag -a 1.0.0 -m "1.0.0"
+git tag -a 1.2.1 -m "1.2.1"
 git push --tags
 ```
 
 Then you can just download it to the server and unpack it and put it in a bin and use it.
 
 ```bash
-VERSION=1.0.0 &&
+VERSION=1.2.1 &&
 wget -O db_backup.tar.gz "https://github.com/r-anime/db_backup/releases/download/${VERSION}/db_backup_${VERSION}_linux_amd64.tar.gz" &&
 tar -xzf db_backup.tar.gz &&
 sudo mv db_backup /usr/local/bin/ &&
